@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "581407592030",
+    "project_id": "bybus-fe002",
+    "storage_bucket": "bybus-fe002.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:581407592030:android:f82720c9525b79688d6ecf",
+        "android_client_info": {
+          "package_name": "com.example.bybus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwi13aRQ88h8JPvp2daledAWFhE3ghoNE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

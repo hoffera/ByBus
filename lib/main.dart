@@ -1,3 +1,4 @@
+import 'package:bybus/firebase_options.dart';
 import 'package:bybus/theme/theme_provider.dart';
 import 'package:bybus/view/add_funds_page.dart';
 import 'package:bybus/view/config_page.dart';
@@ -7,10 +8,15 @@ import 'package:bybus/view/login_page.dart';
 import 'package:bybus/view/map_page.dart';
 import 'package:bybus/view/register_page.dart';
 import 'package:bybus/view/user_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(ChangeNotifierProvider(
     create: (context) => ThemeProvider(),
     child: const MyApp(),
@@ -29,7 +35,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: Provider.of<ThemeProvider>(context).themeData,
       home: const ConfigPage(),
       routes: <String, WidgetBuilder>{
