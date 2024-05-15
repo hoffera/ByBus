@@ -4,7 +4,12 @@ import 'package:bybus/widgets/text_input.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +24,7 @@ class RegisterPage extends StatelessWidget {
               const SizedBox(height: 10.0),
               _subtitle(),
               const SizedBox(height: 30.0),
-              _nameInput(),
-              const SizedBox(height: 20.0),
-              _emailInput(),
-              const SizedBox(height: 20.0),
-              _passwordInput(),
-              const SizedBox(height: 20.0),
-              _repasswordInput(),
+              _inputs(),
               const SizedBox(height: 30.0),
               _registerButton(context),
             ],
@@ -66,10 +65,27 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
+  _inputs() {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          _nameInput(),
+          const SizedBox(height: 20.0),
+          _emailInput(),
+          const SizedBox(height: 20.0),
+          _passwordInput(),
+          const SizedBox(height: 20.0),
+          _repasswordInput(),
+        ],
+      ),
+    );
+  }
+
   _nameInput() {
-    return const Column(
+    return Column(
       children: [
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
@@ -82,16 +98,19 @@ class RegisterPage extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 10.0),
-        TextInput(),
+        const SizedBox(height: 10.0),
+        TextInput(
+          text: 'Nome Completo',
+          controller: _nameController,
+        ),
       ],
     );
   }
 
   _emailInput() {
-    return const Column(
+    return Column(
       children: [
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
@@ -104,16 +123,19 @@ class RegisterPage extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 10.0),
-        TextInput(),
+        const SizedBox(height: 10.0),
+        TextInput(
+          text: 'Seu e-mail',
+          controller: _emailController,
+        ),
       ],
     );
   }
 
   _passwordInput() {
-    return const Column(
+    return Column(
       children: [
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
@@ -126,16 +148,19 @@ class RegisterPage extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 10.0),
-        TextInput(),
+        const SizedBox(height: 10.0),
+        TextInput(
+          text: 'Sua senha',
+          controller: _passwordController,
+        ),
       ],
     );
   }
 
   _repasswordInput() {
-    return const Column(
+    return Column(
       children: [
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
@@ -148,8 +173,11 @@ class RegisterPage extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 10.0),
-        TextInput(),
+        const SizedBox(height: 10.0),
+        TextInput(
+          text: "Repita sua senha",
+          controller: _emailController,
+        ),
       ],
     );
   }

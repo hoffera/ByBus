@@ -4,7 +4,8 @@ import 'package:bybus/widgets/text_input.dart';
 import 'package:flutter/material.dart';
 
 class UserPage extends StatelessWidget {
-  const UserPage({super.key});
+  final TextEditingController _emailController = TextEditingController();
+  UserPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +68,9 @@ class UserPage extends StatelessWidget {
   }
 
   _nameInput() {
-    return const Column(
+    return Column(
       children: [
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
@@ -82,16 +83,19 @@ class UserPage extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 10.0),
-        TextInput(),
+        const SizedBox(height: 10.0),
+        TextInput(
+          text: "Repita sua senha",
+          controller: _emailController,
+        ),
       ],
     );
   }
 
   _emailInput() {
-    return const Column(
+    return Column(
       children: [
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
@@ -104,16 +108,19 @@ class UserPage extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 10.0),
-        TextInput(),
+        const SizedBox(height: 10.0),
+        TextInput(
+          text: "Repita sua senha",
+          controller: _emailController,
+        ),
       ],
     );
   }
 
   _passwordInput() {
-    return const Column(
+    return Column(
       children: [
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
@@ -126,16 +133,19 @@ class UserPage extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 10.0),
-        TextInput(),
+        const SizedBox(height: 10.0),
+        TextInput(
+          text: "Repita sua senha",
+          controller: _emailController,
+        ),
       ],
     );
   }
 
   _repasswordInput() {
-    return const Column(
+    return Column(
       children: [
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
@@ -148,8 +158,11 @@ class UserPage extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 10.0),
-        TextInput(),
+        const SizedBox(height: 10.0),
+        TextInput(
+          text: "Repita sua senha",
+          controller: _emailController,
+        ),
       ],
     );
   }

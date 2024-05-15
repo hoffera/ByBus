@@ -36,12 +36,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: Provider.of<ThemeProvider>(context).themeData,
-      home: const ConfigPage(),
+      home: RegisterPage(),
       routes: <String, WidgetBuilder>{
         '/homeloginpage': (BuildContext context) => const HomeLoginPage(),
-        '/loginpage': (BuildContext context) => const LoginPage(),
-        '/registerpage': (BuildContext context) => const RegisterPage(),
-        '/userpage': (BuildContext context) => const UserPage(),
+        '/loginpage': (BuildContext context) => LoginPage(),
+        '/registerpage': (BuildContext context) => RegisterPage(),
+        '/userpage': (BuildContext context) => UserPage(),
         '/configpage': (BuildContext context) => const ConfigPage(),
         '/homepage': (BuildContext context) => const HomePage(),
         '/mappage': (BuildContext context) => const MapPage(),

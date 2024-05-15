@@ -4,8 +4,14 @@ import 'package:bybus/widgets/text_input.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
+import '../services/auth_services.dart';
+
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  AuthServices authServices = AuthServices();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +21,13 @@ class LoginPage extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              const SizedBox(height: 100),
+              const SizedBox(height: 50),
               _logo(),
               const SizedBox(height: 15),
               _title(),
               const SizedBox(height: 15.0),
               _inputs(),
-              const SizedBox(height: 15.0),
+              const SizedBox(height: 30.0),
               _loginButton(context),
               const SizedBox(height: 15),
               _resetPasswordButton(),
@@ -37,7 +43,7 @@ class LoginPage extends StatelessWidget {
 
   _logo() {
     return Image.asset(
-      height: 326,
+      height: 300,
       'lib/assets/logo.jpeg',
     );
   }
@@ -55,12 +61,23 @@ class LoginPage extends StatelessWidget {
   }
 
   _inputs() {
-    return const VBox(
-      children: [
-        TextInput(),
-        SizedBox(height: 15.0),
-        TextInput(),
-      ],
+    return Form(
+      key: _formKey,
+      child: VBox(
+        children: [
+          TextInput(
+            email: true,
+            controller: _emailController,
+            text: 'Seu e-mail',
+          ),
+          const SizedBox(height: 20.0),
+          TextInput(
+            password: true,
+            controller: _passwordController,
+            text: 'Sua senha',
+          ),
+        ],
+      ),
     );
   }
 
@@ -71,10 +88,19 @@ class LoginPage extends StatelessWidget {
           funds: false,
           color: AppColors.primary,
           onPressed: () {
-            Navigator.pushNamed(context, '/loginpage');
+            _loginButtonPressed();
           },
           text: "Entrar"),
     );
+  }
+
+  _loginButtonPressed() {
+    String email = _emailController.text;
+    String senha = _passwordController.text;
+
+    if (_formKey.currentState!.validate()) {
+      authServices.loginUser(email: email, password: senha);
+    }
   }
 
   _resetPasswordButton() {
@@ -135,7 +161,7 @@ class LoginPage extends StatelessWidget {
           funds: false,
           color: AppColors.primary,
           onPressed: () {
-            Navigator.pushNamed(context, '/loginpage');
+            Navigator.pushNamed(context, '/registerpage');
           },
           text: "Cadastre-se agora"),
     );
