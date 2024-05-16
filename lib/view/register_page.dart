@@ -215,7 +215,7 @@ class RegisterPage extends StatelessWidget {
           .registerUser(name: name, email: email, password: password)
           .then((error) {
         if (error == null) {
-          Navigator.pushNamed(context, '/mappage');
+          Navigator.pushNamed(context, '/navpage');
         }
       });
     }

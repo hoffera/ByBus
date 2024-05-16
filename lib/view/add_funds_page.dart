@@ -1,9 +1,15 @@
 import 'package:bybus/enum/enum.dart';
+import 'package:bybus/models/wallet.dart';
+import 'package:bybus/services/wallet_services.dart';
 import 'package:bybus/widgets/primary_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class AddFundsPage extends StatelessWidget {
-  const AddFundsPage({super.key});
+  final User user;
+  AddFundsPage({super.key, required this.user});
+  WalletService walletService = WalletService();
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +23,8 @@ class AddFundsPage extends StatelessWidget {
               _title(),
               const SizedBox(height: 10.0),
               _subtitle(),
+              const SizedBox(height: 10.0),
+              _saldo(),
               const SizedBox(height: 40.0),
               _addFunds5(context),
               const SizedBox(height: 20.0),
@@ -48,6 +56,39 @@ class AddFundsPage extends StatelessWidget {
               fontWeight: FontWeight.bold),
         ),
       ],
+    );
+  }
+
+  Future<Wallet?> _getWallet() async {
+    return await walletService.getWalletById(user.uid);
+  }
+
+  Widget _saldo() {
+    return FutureBuilder<Wallet?>(
+      future: _getWallet(),
+      builder: (BuildContext context, AsyncSnapshot<Wallet?> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return const Center(child: Text('Erro ao carregar saldo'));
+        } else {
+          Wallet? wallet = snapshot.data;
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                wallet != null
+                    ? "Saldo atual: R\$ ${wallet.balance}"
+                    : "Saldo R\$ 0",
+                style: const TextStyle(
+                    fontSize: 32,
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          );
+        }
+      },
     );
   }
 
@@ -83,7 +124,7 @@ class AddFundsPage extends StatelessWidget {
           funds: true,
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/homepage');
+            _payment(5.0);
           },
           text: "Adicionar R\$ 5,00"),
     );
@@ -96,7 +137,7 @@ class AddFundsPage extends StatelessWidget {
           funds: true,
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/homepage');
+            _payment(10.0);
           },
           text: "Adicionar R\$ 10,00"),
     );
@@ -109,7 +150,7 @@ class AddFundsPage extends StatelessWidget {
           funds: true,
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/homepage');
+            _payment(20.0);
           },
           text: "Adicionar R\$ 20,00"),
     );
@@ -122,7 +163,7 @@ class AddFundsPage extends StatelessWidget {
           funds: true,
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/homepage');
+            _payment(50.0);
           },
           text: "Adicionar R\$ 50,00"),
     );
@@ -135,7 +176,7 @@ class AddFundsPage extends StatelessWidget {
           funds: true,
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/homepage');
+            _payment(100.0);
           },
           text: "Adicionar R\$ 100,00"),
     );
@@ -148,9 +189,22 @@ class AddFundsPage extends StatelessWidget {
           funds: true,
           color: Colors.white,
           onPressed: () {
-            Navigator.pushNamed(context, '/homepage');
+            _payment(200.0);
           },
           text: "Adicionar R\$ 200,00"),
     );
+  }
+
+  _payment(double value) async {
+    Wallet? wallet = await walletService.getWalletById(user.uid);
+
+    if (wallet != null) {
+      double newBalance = double.parse(wallet.balance) + value;
+      wallet.balance = newBalance.toString();
+      await walletService.updateWalletBalance(
+        walletId: wallet.id,
+        newBalance: wallet.balance,
+      );
+    }
   }
 }

@@ -101,7 +101,7 @@ class LoginPage extends StatelessWidget {
     if (_formKey.currentState!.validate()) {
       authServices.loginUser(email: email, password: senha).then((error) {
         if (error == null) {
-          Navigator.pushNamed(context, '/registerpage');
+          Navigator.pushNamed(context, '/navpage');
         }
       });
     }

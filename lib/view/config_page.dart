@@ -94,11 +94,11 @@ class ConfigPage extends StatelessWidget {
       height: 60,
       child: PrimaryButton(
           funds: false,
-          color: AppColors.primary,
+          color: Colors.red,
           onPressed: () {
             Navigator.pushNamed(context, '/homepage');
           },
-          text: "Termos de uso"),
+          text: "Sair"),
     );
   }
 

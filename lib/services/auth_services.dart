@@ -1,3 +1,5 @@
+import 'package:bybus/models/wallet.dart';
+import 'package:bybus/services/wallet_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
@@ -35,6 +37,9 @@ class AuthService {
       );
 
       await userCredential.user!.updateDisplayName(name);
+      Wallet wallet = Wallet(balance: "0", id: userCredential.user!.uid);
+      WalletService walletService = WalletService();
+      walletService.addWallet(wallet: wallet);
       //print("Funcionou! Chegamos até essa linha!");
     } on FirebaseAuthException catch (e) {
       switch (e.code) {

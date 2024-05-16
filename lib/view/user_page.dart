@@ -15,7 +15,7 @@ class UserPage extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              const SizedBox(height: 50.0),
+              const SizedBox(height: 60.0),
               _title(),
               const SizedBox(height: 10.0),
               _subtitle(),
@@ -25,9 +25,7 @@ class UserPage extends StatelessWidget {
               _emailInput(),
               const SizedBox(height: 20.0),
               _passwordInput(),
-              const SizedBox(height: 20.0),
-              _repasswordInput(),
-              const SizedBox(height: 30.0),
+              const SizedBox(height: 50.0),
               _registerButton(context),
             ],
           ),
@@ -125,31 +123,6 @@ class UserPage extends StatelessWidget {
           children: [
             Text(
               "Senha",
-              style: TextStyle(
-                fontSize: 24,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 10.0),
-        TextInput(
-          text: "Repita sua senha",
-          controller: _emailController,
-        ),
-      ],
-    );
-  }
-
-  _repasswordInput() {
-    return Column(
-      children: [
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              "Repita sua senha",
               style: TextStyle(
                 fontSize: 24,
                 color: Colors.white,

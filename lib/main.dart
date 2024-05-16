@@ -6,8 +6,10 @@ import 'package:bybus/view/home_login_page.dart';
 import 'package:bybus/view/home_page.dart';
 import 'package:bybus/view/login_page.dart';
 import 'package:bybus/view/map_page.dart';
+import 'package:bybus/view/navpage.dart';
 import 'package:bybus/view/register_page.dart';
 import 'package:bybus/view/user_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,12 +33,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: Provider.of<ThemeProvider>(context).themeData,
-      home: const HomePage(),
+      home: const RouteScreens(),
       routes: <String, WidgetBuilder>{
         '/homeloginpage': (BuildContext context) => const HomeLoginPage(),
         '/loginpage': (BuildContext context) => LoginPage(),
@@ -45,7 +46,46 @@ class _MyAppState extends State<MyApp> {
         '/configpage': (BuildContext context) => const ConfigPage(),
         '/homepage': (BuildContext context) => const HomePage(),
         '/mappage': (BuildContext context) => const MapPage(),
-        '/addfundspage': (BuildContext context) => const AddFundsPage(),
+        '/addfundspage': (BuildContext context) => Builder(
+              builder: (context) {
+                final user = FirebaseAuth.instance.currentUser;
+                return AddFundsPage(
+                  user: user!,
+                );
+              },
+            ),
+        '/navpage': (BuildContext context) => Builder(
+              builder: (context) {
+                final user = FirebaseAuth.instance.currentUser;
+                return NavPage(
+                  user: user!,
+                );
+              },
+            ),
+      },
+    );
+  }
+}
+
+class RouteScreens extends StatelessWidget {
+  const RouteScreens({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: FirebaseAuth.instance.userChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          if (snapshot.hasData) {
+            return NavPage(
+              user: snapshot.data!,
+            );
+          } else {
+            return const HomeLoginPage();
+          }
+        }
       },
     );
   }

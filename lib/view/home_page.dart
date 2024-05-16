@@ -199,7 +199,7 @@ class HomePage extends StatelessWidget {
           funds: false,
           color: AppColors.primary,
           onPressed: () {
-            Navigator.pushNamed(context, '/homeloginpage');
+            Navigator.pushNamed(context, '/navpage');
           },
           text: "Confirmar edição"),
     );
