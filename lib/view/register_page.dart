@@ -1,4 +1,5 @@
 import 'package:bybus/enum/enum.dart';
+import 'package:bybus/services/auth_services.dart';
 import 'package:bybus/widgets/primary_button.dart';
 import 'package:bybus/widgets/text_input.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ class RegisterPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _rePasswordController = TextEditingController();
+  AuthService authServices = AuthService();
   final _formKey = GlobalKey<FormState>();
 
   RegisterPage({super.key});
@@ -176,7 +179,7 @@ class RegisterPage extends StatelessWidget {
         const SizedBox(height: 10.0),
         TextInput(
           text: "Repita sua senha",
-          controller: _emailController,
+          controller: _rePasswordController,
         ),
       ],
     );
@@ -189,9 +192,32 @@ class RegisterPage extends StatelessWidget {
           funds: false,
           color: AppColors.primary,
           onPressed: () {
-            Navigator.pushNamed(context, '/userpage');
+            _registerButtonPressed(context);
           },
           text: "Cadastrar"),
     );
+  }
+
+  _passwordCorrect() {
+    if (_passwordController.text == _rePasswordController.text) {
+      return true;
+    }
+    return false;
+  }
+
+  _registerButtonPressed(context) {
+    String email = _emailController.text;
+    String password = _passwordController.text;
+    String name = _nameController.text;
+
+    if (_formKey.currentState!.validate() && _passwordCorrect()) {
+      authServices
+          .registerUser(name: name, email: email, password: password)
+          .then((error) {
+        if (error == null) {
+          Navigator.pushNamed(context, '/mappage');
+        }
+      });
+    }
   }
 }

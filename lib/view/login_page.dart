@@ -10,7 +10,7 @@ class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  AuthServices authServices = AuthServices();
+  AuthService authServices = AuthService();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -88,18 +88,22 @@ class LoginPage extends StatelessWidget {
           funds: false,
           color: AppColors.primary,
           onPressed: () {
-            _loginButtonPressed();
+            _loginButtonPressed(context);
           },
           text: "Entrar"),
     );
   }
 
-  _loginButtonPressed() {
+  _loginButtonPressed(context) {
     String email = _emailController.text;
     String senha = _passwordController.text;
 
     if (_formKey.currentState!.validate()) {
-      authServices.loginUser(email: email, password: senha);
+      authServices.loginUser(email: email, password: senha).then((error) {
+        if (error == null) {
+          Navigator.pushNamed(context, '/registerpage');
+        }
+      });
     }
   }
 

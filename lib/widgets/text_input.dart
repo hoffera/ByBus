@@ -30,7 +30,6 @@ class TextInput extends StatelessWidget {
                 value.length < 4) {
               return "O valor do e-mail deve ser válido";
             }
-            print('oi');
           } else if (password == true) {
             if (value == null || value.length < 4) {
               return "Insira uma senha válida.";
