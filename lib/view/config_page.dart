@@ -1,4 +1,5 @@
 import 'package:bybus/enum/enum.dart';
+import 'package:bybus/services/auth_services.dart';
 import 'package:bybus/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 
@@ -22,9 +23,9 @@ class ConfigPage extends StatelessWidget {
               const SizedBox(height: 50.0),
               _languageButton(context),
               const SizedBox(height: 50.0),
-              _termsButton(context),
-              const SizedBox(height: 50.0),
               _fontButton(context),
+              const SizedBox(height: 50.0),
+              _logoutButton(context),
             ],
           ),
         ),
@@ -89,14 +90,15 @@ class ConfigPage extends StatelessWidget {
     );
   }
 
-  _termsButton(context) {
+  _logoutButton(context) {
     return SizedBox(
       height: 60,
       child: PrimaryButton(
-          funds: false,
+          funds: true,
+          logoff: true,
           color: Colors.red,
           onPressed: () {
-            Navigator.pushNamed(context, '/homepage');
+            AuthService().deslogar();
           },
           text: "Sair"),
     );

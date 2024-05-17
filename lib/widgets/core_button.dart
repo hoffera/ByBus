@@ -6,6 +6,7 @@ class CoreButton extends StatelessWidget {
   final String text;
   final Color color;
   final bool funds;
+  final bool logoff;
   final bool underline;
   final bool strikethrough;
   final bool checked;
@@ -19,6 +20,7 @@ class CoreButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.color,
+    this.logoff = false,
     this.checked = false,
     this.underline = false,
     this.strikethrough = false,
@@ -64,7 +66,8 @@ class CoreButton extends StatelessWidget {
       style: TextStyle(
         fontSize: funds ? 32 : 20,
         fontWeight: funds ? FontWeight.bold : FontWeight.w700,
-        color: funds ? AppColors.primary : Colors.white,
+        color:
+            logoff ? Colors.white : (funds ? AppColors.primary : Colors.white),
       ),
     );
   }
