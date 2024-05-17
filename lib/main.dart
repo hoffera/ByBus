@@ -42,7 +42,12 @@ class _MyAppState extends State<MyApp> {
         '/homeloginpage': (BuildContext context) => const HomeLoginPage(),
         '/loginpage': (BuildContext context) => LoginPage(),
         '/registerpage': (BuildContext context) => RegisterPage(),
-        '/userpage': (BuildContext context) => UserPage(),
+        '/userpage': (BuildContext context) => Builder(
+              builder: (context) {
+                final user = FirebaseAuth.instance.currentUser;
+                return UserPage(user: user!);
+              },
+            ),
         '/configpage': (BuildContext context) => const ConfigPage(),
         '/homepage': (BuildContext context) => const HomePage(),
         '/mappage': (BuildContext context) => Builder(

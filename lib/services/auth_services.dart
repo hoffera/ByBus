@@ -52,6 +52,32 @@ class AuthService {
     return null;
   }
 
+  Future<String?> editUser({
+    required String name,
+  }) async {
+    try {
+      // UserCredential userCredential =
+      //     await _firebaseAuth.createUserWithEmailAndPassword(
+      //   email: email,
+      //   password: password,
+      // );
+
+      User? userCredential = _firebaseAuth.currentUser;
+
+      await userCredential!.updateDisplayName(name);
+
+      //print("Funcionou! Chegamos até essa linha!");
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "email-already-in-use":
+          return "O e-mail já está em uso.";
+      }
+      return e.code;
+    }
+
+    return null;
+  }
+
   Future<String?> redefincaoPassword({required String email}) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);

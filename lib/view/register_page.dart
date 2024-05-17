@@ -1,6 +1,7 @@
 import 'package:bybus/enum/enum.dart';
 import 'package:bybus/services/auth_services.dart';
 import 'package:bybus/widgets/primary_button.dart';
+import 'package:bybus/widgets/show_snackbar.dart';
 import 'package:bybus/widgets/text_input.dart';
 import 'package:flutter/material.dart';
 
@@ -104,6 +105,9 @@ class RegisterPage extends StatelessWidget {
         ),
         const SizedBox(height: 10.0),
         TextInput(
+          off: false,
+          password: false,
+          name: true,
           text: 'Nome Completo',
           controller: _nameController,
         ),
@@ -129,6 +133,8 @@ class RegisterPage extends StatelessWidget {
         ),
         const SizedBox(height: 10.0),
         TextInput(
+          off: false,
+          password: false,
           text: 'Seu e-mail',
           controller: _emailController,
         ),
@@ -154,6 +160,8 @@ class RegisterPage extends StatelessWidget {
         ),
         const SizedBox(height: 10.0),
         TextInput(
+          off: false,
+          password: true,
           text: 'Sua senha',
           controller: _passwordController,
         ),
@@ -179,6 +187,8 @@ class RegisterPage extends StatelessWidget {
         ),
         const SizedBox(height: 10.0),
         TextInput(
+          off: false,
+          password: true,
           text: "Repita sua senha",
           controller: _rePasswordController,
         ),
@@ -216,6 +226,10 @@ class RegisterPage extends StatelessWidget {
           .registerUser(name: name, email: email, password: password)
           .then((error) {
         if (error == null) {
+          showSnackBar(
+              context: context,
+              mensagem: "Usuario cadastrado com sucesso!",
+              isErro: true);
           Navigator.pushNamed(context, '/navpage');
         }
       });

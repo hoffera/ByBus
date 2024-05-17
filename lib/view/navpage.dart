@@ -25,7 +25,7 @@ class _NavPageState extends State<NavPage> {
     _widgetOptions = <Widget>[
       MapPage(user: widget.user),
       AddFundsPage(user: widget.user),
-      UserPage(),
+      UserPage(user: widget.user),
       const ConfigPage()
     ];
   }

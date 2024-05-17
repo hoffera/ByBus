@@ -1,7 +1,7 @@
 import 'package:bybus/enum/enum.dart';
 import 'package:bybus/models/wallet.dart';
 import 'package:bybus/services/wallet_services.dart';
-import 'package:bybus/widgets/BalanceText.dart';
+import 'package:bybus/widgets/balance_text.dart';
 import 'package:bybus/widgets/primary_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -57,52 +57,6 @@ class AddFundsPage extends StatelessWidget {
               fontWeight: FontWeight.bold),
         ),
       ],
-    );
-  }
-
-  Future<Wallet?> _getWallet() async {
-    return await walletService.getWalletById(user.uid);
-  }
-
-  Widget _saldo() {
-    return FutureBuilder<Wallet?>(
-      future: _getWallet(),
-      builder: (BuildContext context, AsyncSnapshot<Wallet?> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return const Center(child: Text('Erro ao carregar saldo'));
-        } else {
-          Wallet? wallet = snapshot.data;
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              RichText(
-                text: TextSpan(
-                  children: [
-                    const TextSpan(
-                      text: "Saldo atual: ",
-                      style: TextStyle(
-                        fontSize: 32,
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    TextSpan(
-                      text: wallet != null ? "R\$ ${wallet.balance}" : "R\$ 0",
-                      style: const TextStyle(
-                        fontSize: 32,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          );
-        }
-      },
     );
   }
 

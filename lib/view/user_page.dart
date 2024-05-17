@@ -1,11 +1,19 @@
 import 'package:bybus/enum/enum.dart';
+import 'package:bybus/services/auth_services.dart';
 import 'package:bybus/widgets/primary_button.dart';
+import 'package:bybus/widgets/show_snackbar.dart';
 import 'package:bybus/widgets/text_input.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class UserPage extends StatelessWidget {
+  final User user;
+  UserPage({super.key, required this.user});
   final TextEditingController _emailController = TextEditingController();
-  UserPage({super.key});
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  AuthService authServices = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +28,9 @@ class UserPage extends StatelessWidget {
               const SizedBox(height: 10.0),
               _subtitle(),
               const SizedBox(height: 30.0),
-              _nameInput(),
-              const SizedBox(height: 20.0),
-              _emailInput(),
-              const SizedBox(height: 20.0),
-              _passwordInput(),
-              const SizedBox(height: 50.0),
-              _registerButton(context),
+              _inputs(),
+              const SizedBox(height: 30.0),
+              _editButton(context),
             ],
           ),
         ),
@@ -65,6 +69,21 @@ class UserPage extends StatelessWidget {
     );
   }
 
+  _inputs() {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          _nameInput(),
+          const SizedBox(height: 20.0),
+          _emailInput(),
+          const SizedBox(height: 20.0),
+          //  _passwordInput(),
+        ],
+      ),
+    );
+  }
+
   _nameInput() {
     return Column(
       children: [
@@ -83,8 +102,10 @@ class UserPage extends StatelessWidget {
         ),
         const SizedBox(height: 10.0),
         TextInput(
-          text: "Repita sua senha",
-          controller: _emailController,
+          off: false,
+          password: false,
+          text: "${user.displayName}",
+          controller: _nameController,
         ),
       ],
     );
@@ -108,48 +129,45 @@ class UserPage extends StatelessWidget {
         ),
         const SizedBox(height: 10.0),
         TextInput(
-          text: "Repita sua senha",
+          off: true,
+          password: false,
+          text: "${user.email}",
           controller: _emailController,
         ),
       ],
     );
   }
 
-  _passwordInput() {
-    return Column(
-      children: [
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              "Senha",
-              style: TextStyle(
-                fontSize: 24,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 10.0),
-        TextInput(
-          text: "Repita sua senha",
-          controller: _emailController,
-        ),
-      ],
-    );
-  }
-
-  _registerButton(context) {
+  _editButton(context) {
     return SizedBox(
       height: 50,
       child: PrimaryButton(
           funds: false,
           color: AppColors.primary,
           onPressed: () {
-            Navigator.pushNamed(context, '/configpage');
+            _editButtonPressed(context);
           },
           text: "Editar"),
     );
+  }
+
+  _editButtonPressed(context) {
+    String name = _nameController.text;
+
+    if (name != "") {
+      authServices.editUser(name: name).then((error) {
+        if (error != null) {
+          showSnackBar(context: context, mensagem: error, isErro: true);
+        } else {
+          showSnackBar(
+              context: context,
+              mensagem: "Usuário atualizado com sucesso!",
+              isErro: false);
+        }
+      });
+    } else {
+      showSnackBar(
+          context: context, mensagem: "Insira um novo Nome!", isErro: true);
+    }
   }
 }

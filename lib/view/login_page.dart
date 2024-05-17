@@ -67,12 +67,15 @@ class LoginPage extends StatelessWidget {
       child: VBox(
         children: [
           TextInput(
+            off: false,
+            password: false,
             email: true,
             controller: _emailController,
             text: 'Seu e-mail',
           ),
           const SizedBox(height: 20.0),
           TextInput(
+            off: false,
             password: true,
             controller: _passwordController,
             text: 'Sua senha',

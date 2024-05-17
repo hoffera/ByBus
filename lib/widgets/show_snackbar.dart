@@ -6,7 +6,20 @@ showSnackBar({
   bool isErro = true,
 }) {
   SnackBar snackBar = SnackBar(
-    content: Text(mensagem),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(20),
+      ),
+    ),
+    duration: const Duration(milliseconds: 1000),
+    content: Text(
+      mensagem,
+      style: const TextStyle(
+        fontSize: 24,
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
     backgroundColor: (isErro) ? Colors.red : Colors.green,
   );
 

@@ -1,5 +1,5 @@
 import 'package:bybus/enum/enum.dart';
-import 'package:bybus/widgets/BalanceText.dart';
+import 'package:bybus/widgets/balance_text.dart';
 import 'package:bybus/widgets/drop_button.dart';
 import 'package:bybus/widgets/map_widget.dart';
 import 'package:bybus/widgets/primary_button.dart';
@@ -23,7 +23,7 @@ class _MapPageState extends State<MapPage> {
         children: [
           _map(),
           const SizedBox(height: 10),
-         _balance(),
+          _balance(),
           _goToText(),
           _timeText(),
           const SizedBox(height: 10.0),
@@ -32,7 +32,6 @@ class _MapPageState extends State<MapPage> {
       ),
     ));
   }
-  
 
   _map() {
     return const SizedBox(
@@ -41,11 +40,11 @@ class _MapPageState extends State<MapPage> {
       child: MapWidget(),
     );
   }
-  _balance(){
-    return Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: BalanceText(uid: widget.user.uid)),
 
+  _balance() {
+    return Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: BalanceText(uid: widget.user.uid));
   }
 
   _goToText() {
@@ -82,6 +81,7 @@ class _MapPageState extends State<MapPage> {
       style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
     );
   }
+
   _payButton(context) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
@@ -97,6 +97,4 @@ class _MapPageState extends State<MapPage> {
       ),
     );
   }
-
-
 }

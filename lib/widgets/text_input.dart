@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 
 class TextInput extends StatelessWidget {
-  final TextEditingController controller;
-  final String text;
   final bool? email;
-  final bool? password;
+  final bool? name;
+  final bool off;
+  final String text;
+  final bool password;
+  final TextEditingController controller;
 
   const TextInput({
     super.key,
-    required this.controller,
-    required this.text,
     this.email,
-    this.password,
+    this.name,
+    required this.off,
+    required this.text,
+    required this.password,
+    required this.controller,
   });
 
   @override
@@ -19,8 +23,15 @@ class TextInput extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: TextFormField(
+        readOnly: off,
         controller: controller,
         validator: (value) {
+          if (name == true) {
+            if (value == null || value == "") {
+              return "O valor do nome deve ser preenchido";
+            }
+          }
+
           if (email == true) {
             if (value == null || value == "") {
               return "O valor de e-mail deve ser preenchido";
@@ -38,6 +49,7 @@ class TextInput extends StatelessWidget {
 
           return null;
         },
+        obscureText: password,
         decoration: InputDecoration(
           filled: true,
           fillColor: Colors.white,
