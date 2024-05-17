@@ -1,3 +1,4 @@
+import 'package:bybus/enum/enum.dart';
 import 'package:flutter/material.dart';
 
 class TextInput extends StatelessWidget {
@@ -51,6 +52,13 @@ class TextInput extends StatelessWidget {
         },
         obscureText: password,
         decoration: InputDecoration(
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: AppColors.primary), // Cor cinza
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          // enabledBorder: InputBorder.none,
+          //  errorBorder: InputBorder.none,
+          // disabledBorder: InputBorder.none,
           filled: true,
           fillColor: Colors.white,
           hintText: text,

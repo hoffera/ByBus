@@ -92,16 +92,20 @@ class ConfigPage extends StatelessWidget {
 
   _logoutButton(context) {
     return SizedBox(
-      height: 60,
-      child: PrimaryButton(
+        height: 60,
+        child: PrimaryButton(
           funds: true,
           logoff: true,
           color: Colors.red,
+          text: "Sair",
           onPressed: () {
-            AuthService().deslogar();
+            AuthService().deslogar().then((error) {
+              if (error == null) {
+                Navigator.pushNamed(context, '/homeloginpage');
+              }
+            });
           },
-          text: "Sair"),
-    );
+        ));
   }
 
   _fontButton(context) {

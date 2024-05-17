@@ -19,20 +19,23 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Center(
-          child: Column(
-            children: [
-              const SizedBox(height: 50.0),
-              _title(),
-              const SizedBox(height: 10.0),
-              _subtitle(),
-              const SizedBox(height: 30.0),
-              _inputs(),
-              const SizedBox(height: 30.0),
-              _registerButton(context),
-            ],
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Center(
+            child: Column(
+              children: [
+                const SizedBox(height: 50.0),
+                _title(),
+                const SizedBox(height: 10.0),
+                _subtitle(),
+                const SizedBox(height: 30.0),
+                _inputs(),
+                const SizedBox(height: 30.0),
+                _registerButton(context),
+              ],
+            ),
           ),
         ),
       ),

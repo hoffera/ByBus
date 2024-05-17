@@ -78,7 +78,7 @@ class AuthService {
     return null;
   }
 
-  Future<String?> redefincaoPassword({required String email}) async {
+  Future<String?> resetPassword({required String email}) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {

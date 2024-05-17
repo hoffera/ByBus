@@ -1,5 +1,8 @@
 import 'package:bybus/enum/enum.dart';
+import 'package:bybus/widgets/loading_alert.dart';
 import 'package:bybus/widgets/primary_button.dart';
+import 'package:bybus/widgets/reset_password_dialog.dart';
+import 'package:bybus/widgets/show_snackbar.dart';
 import 'package:bybus/widgets/text_input.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
@@ -17,25 +20,28 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Center(
-          child: Column(
-            children: [
-              const SizedBox(height: 50),
-              _logo(),
-              const SizedBox(height: 15),
-              _title(),
-              const SizedBox(height: 15.0),
-              _inputs(),
-              const SizedBox(height: 30.0),
-              _loginButton(context),
-              const SizedBox(height: 15),
-              _resetPasswordButton(),
-              _orText(),
-              const SizedBox(height: 15.0),
-              _registerButton(context),
-            ],
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Center(
+            child: Column(
+              children: [
+                const SizedBox(height: 50),
+                _logo(),
+                const SizedBox(height: 15),
+                _title(),
+                const SizedBox(height: 15.0),
+                _inputs(),
+                const SizedBox(height: 30.0),
+                _loginButton(context),
+                const SizedBox(height: 15),
+                _resetPasswordButton(context),
+                _orText(),
+                const SizedBox(height: 15.0),
+                _registerButton(context),
+              ],
+            ),
           ),
         ),
       ),
@@ -103,28 +109,48 @@ class LoginPage extends StatelessWidget {
     String senha = _passwordController.text;
 
     if (_formKey.currentState!.validate()) {
+      showDialog(
+        context: context,
+        barrierDismissible:
+            false, // Impedir que o diálogo seja fechado ao tocar fora dele
+        builder: (BuildContext context) {
+          return const LoadingAlert();
+        },
+      );
       authServices.loginUser(email: email, password: senha).then((error) {
         if (error == null) {
+          showSnackBar(
+              context: context, mensagem: "Logado com sucesso!", isErro: false);
           Navigator.pushNamed(context, '/navpage');
+        } else {
+          showSnackBar(context: context, mensagem: error, isErro: true);
         }
       });
     }
   }
 
-  _resetPasswordButton() {
+  _resetPasswordButton(context) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: VBox(
         style: Style(
           $box.alignment(Alignment.bottomRight),
         ),
-        children: const [
-          Text("Esqueci minha senha",
+        children: [
+          GestureDetector(
+            onTap: () {
+              showPasswordResetDialog(context);
+            },
+            child: const Text(
+              "Esqueci minha senha",
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.white,
                 fontWeight: FontWeight.w400,
-              ))
+                decoration: TextDecoration.underline, // Adiciona o sublinhado
+              ),
+            ),
+          )
         ],
       ),
     );

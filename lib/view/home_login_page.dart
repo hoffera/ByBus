@@ -29,7 +29,8 @@ class HomeLoginPage extends StatelessWidget {
               child: SizedBox(
                 height: 50,
                 child: PrimaryButton(
-                  funds: false,
+                  funds: true,
+                  logoff: true,
                   color: AppColors.secondary,
                   onPressed: () {
                     Navigator.pushNamed(context, '/loginpage');
