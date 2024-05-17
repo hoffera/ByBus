@@ -1,3 +1,4 @@
+import 'package:bybus/enum/enum.dart';
 import 'package:flutter/material.dart';
 
 class LoadingAlert extends StatelessWidget {
@@ -9,7 +10,9 @@ class LoadingAlert extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          CircularProgressIndicator(),
+          CircularProgressIndicator(
+            color: AppColors.primary,
+          ),
           SizedBox(height: 16),
           Text("Carregando..."),
         ],

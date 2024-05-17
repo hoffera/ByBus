@@ -51,6 +51,7 @@ class TextInput extends StatelessWidget {
           return null;
         },
         obscureText: password,
+        cursorColor: AppColors.primary,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: AppColors.primary), // Cor cinza

@@ -3,13 +3,20 @@ import 'package:bybus/models/wallet.dart';
 import 'package:bybus/services/wallet_services.dart';
 import 'package:bybus/widgets/balance_text.dart';
 import 'package:bybus/widgets/primary_button.dart';
+import 'package:bybus/widgets/show_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class AddFundsPage extends StatelessWidget {
+class AddFundsPage extends StatefulWidget {
   final User user;
-  AddFundsPage({super.key, required this.user});
+  const AddFundsPage({super.key, required this.user});
+
+  @override
+  State<AddFundsPage> createState() => _AddFundsPageState();
+}
+
+class _AddFundsPageState extends State<AddFundsPage> {
   WalletService walletService = WalletService();
 
   @override
@@ -37,7 +44,7 @@ class AddFundsPage extends StatelessWidget {
               const SizedBox(height: 20.0),
               _addFunds200(context),
               const SizedBox(height: 20.0),
-              BalanceText(uid: user.uid),
+              BalanceText(uid: widget.user.uid),
             ],
           ),
         ),
@@ -92,7 +99,7 @@ class AddFundsPage extends StatelessWidget {
           funds: true,
           color: Colors.white,
           onPressed: () {
-            _payment(5.0);
+            _payment(5.0, context);
           },
           text: "Adicionar R\$ 5,00"),
     );
@@ -105,7 +112,7 @@ class AddFundsPage extends StatelessWidget {
           funds: true,
           color: Colors.white,
           onPressed: () {
-            _payment(10.0);
+            _payment(10.0, context);
           },
           text: "Adicionar R\$ 10,00"),
     );
@@ -118,7 +125,7 @@ class AddFundsPage extends StatelessWidget {
           funds: true,
           color: Colors.white,
           onPressed: () {
-            _payment(20.0);
+            _payment(20.0, context);
           },
           text: "Adicionar R\$ 20,00"),
     );
@@ -131,7 +138,7 @@ class AddFundsPage extends StatelessWidget {
           funds: true,
           color: Colors.white,
           onPressed: () {
-            _payment(50.0);
+            _payment(50.0, context);
           },
           text: "Adicionar R\$ 50,00"),
     );
@@ -144,7 +151,7 @@ class AddFundsPage extends StatelessWidget {
           funds: true,
           color: Colors.white,
           onPressed: () {
-            _payment(100.0);
+            _payment(100.0, context);
           },
           text: "Adicionar R\$ 100,00"),
     );
@@ -157,14 +164,14 @@ class AddFundsPage extends StatelessWidget {
           funds: true,
           color: Colors.white,
           onPressed: () {
-            _payment(200.0);
+            _payment(200.0, context);
           },
           text: "Adicionar R\$ 200,00"),
     );
   }
 
-  _payment(double value) async {
-    Wallet? wallet = await walletService.getWalletById(user.uid);
+  _payment(double value, context) async {
+    Wallet? wallet = await walletService.getWalletById(widget.user.uid);
 
     if (wallet != null) {
       double newBalance = double.parse(wallet.balance) + value;
@@ -173,6 +180,13 @@ class AddFundsPage extends StatelessWidget {
         walletId: wallet.id,
         newBalance: wallet.balance,
       );
+      showSnackBar(
+          context: context,
+          mensagem: "Pagamento aprovado, Saldo Adicionado com sucesso!",
+          isErro: false);
     }
+    setState(() {}); // Atualiza a UI
   }
+
+  refresh() async {}
 }
