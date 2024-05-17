@@ -45,21 +45,22 @@ class _MyAppState extends State<MyApp> {
         '/userpage': (BuildContext context) => UserPage(),
         '/configpage': (BuildContext context) => const ConfigPage(),
         '/homepage': (BuildContext context) => const HomePage(),
-        '/mappage': (BuildContext context) => const MapPage(),
+        '/mappage': (BuildContext context) => Builder(
+              builder: (context) {
+                final user = FirebaseAuth.instance.currentUser;
+                return MapPage(user: user!);
+              },
+            ),
         '/addfundspage': (BuildContext context) => Builder(
               builder: (context) {
                 final user = FirebaseAuth.instance.currentUser;
-                return AddFundsPage(
-                  user: user!,
-                );
+                return AddFundsPage(user: user!);
               },
             ),
         '/navpage': (BuildContext context) => Builder(
               builder: (context) {
                 final user = FirebaseAuth.instance.currentUser;
-                return NavPage(
-                  user: user!,
-                );
+                return NavPage(user: user!);
               },
             ),
       },

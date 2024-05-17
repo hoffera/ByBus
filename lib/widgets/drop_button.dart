@@ -9,54 +9,48 @@ class DropButton extends StatefulWidget {
 }
 
 class _DropButtonState extends State<DropButton> {
-  @override
   String? selectedValue;
   @override
   Widget build(BuildContext context) {
     List<String> dropDownItems = <String>['12:00', '13:00', '14:00', '1:00'];
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        height: 55,
-        width: 210,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: AppColors.primary, // Define a cor rosa aqui
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: DropdownButton<String>(
-            hint: const Text(
-              "Univali",
-              style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
-            ),
-            value: selectedValue,
-            isExpanded: true,
-            underline: const SizedBox(),
-            borderRadius: BorderRadius.circular(20.0),
-            dropdownColor: AppColors.primary,
-            items: dropDownItems.map((String value) {
-              return DropdownMenuItem(
-                value: value,
-                child: Text(
-                  value,
-                  style: const TextStyle(
-                      fontSize: 24,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
-                ),
-              );
-            }).toList(),
-            onChanged: (newValue) {
-              setState(() {
-                selectedValue = newValue!;
-              });
-            },
+    return Container(
+      height: 55,
+      width: 210,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: AppColors.primary, // Define a cor rosa aqui
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: DropdownButton<String>(
+          hint: const Text(
+            "Univali",
+            style: TextStyle(
+                fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
           ),
+          value: selectedValue,
+          isExpanded: true,
+          underline: const SizedBox(),
+          borderRadius: BorderRadius.circular(20.0),
+          dropdownColor: AppColors.primary,
+          items: dropDownItems.map((String value) {
+            return DropdownMenuItem(
+              value: value,
+              child: Text(
+                value,
+                style: const TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+            );
+          }).toList(),
+          onChanged: (newValue) {
+            setState(() {
+              selectedValue = newValue!;
+            });
+          },
         ),
       ),
     );

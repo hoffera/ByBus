@@ -23,7 +23,7 @@ class _NavPageState extends State<NavPage> {
   void initState() {
     super.initState();
     _widgetOptions = <Widget>[
-      const MapPage(),
+      MapPage(user: widget.user),
       AddFundsPage(user: widget.user),
       UserPage(),
       const ConfigPage()

@@ -1,6 +1,7 @@
 import 'package:bybus/enum/enum.dart';
 import 'package:bybus/models/wallet.dart';
 import 'package:bybus/services/wallet_services.dart';
+import 'package:bybus/widgets/BalanceText.dart';
 import 'package:bybus/widgets/primary_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +24,6 @@ class AddFundsPage extends StatelessWidget {
               _title(),
               const SizedBox(height: 10.0),
               _subtitle(),
-              const SizedBox(height: 10.0),
-              _saldo(),
               const SizedBox(height: 40.0),
               _addFunds5(context),
               const SizedBox(height: 20.0),
@@ -37,6 +36,8 @@ class AddFundsPage extends StatelessWidget {
               _addFunds100(context),
               const SizedBox(height: 20.0),
               _addFunds200(context),
+              const SizedBox(height: 20.0),
+              BalanceText(uid: user.uid),
             ],
           ),
         ),
@@ -76,14 +77,27 @@ class AddFundsPage extends StatelessWidget {
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                wallet != null
-                    ? "Saldo atual: R\$ ${wallet.balance}"
-                    : "Saldo R\$ 0",
-                style: const TextStyle(
-                    fontSize: 32,
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.bold),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    const TextSpan(
+                      text: "Saldo atual: ",
+                      style: TextStyle(
+                        fontSize: 32,
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: wallet != null ? "R\$ ${wallet.balance}" : "R\$ 0",
+                      style: const TextStyle(
+                        fontSize: 32,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           );

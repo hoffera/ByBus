@@ -6,6 +6,7 @@ import 'package:mix/mix.dart';
 
 import '../services/auth_services.dart';
 
+// ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   final TextEditingController _emailController = TextEditingController();

@@ -4,6 +4,7 @@ import 'package:bybus/widgets/primary_button.dart';
 import 'package:bybus/widgets/text_input.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class RegisterPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
