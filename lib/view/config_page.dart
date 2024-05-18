@@ -23,7 +23,7 @@ class ConfigPage extends StatelessWidget {
               const SizedBox(height: 50.0),
               _languageButton(context),
               const SizedBox(height: 50.0),
-              _fontButton(context),
+              _deleteAccountButton(context),
               const SizedBox(height: 50.0),
               _logoutButton(context),
             ],
@@ -96,7 +96,7 @@ class ConfigPage extends StatelessWidget {
         child: PrimaryButton(
           funds: true,
           logoff: true,
-          color: Colors.red,
+          color: Colors.grey,
           text: "Sair",
           onPressed: () {
             AuthService().deslogar().then((error) {
@@ -108,16 +108,17 @@ class ConfigPage extends StatelessWidget {
         ));
   }
 
-  _fontButton(context) {
+  _deleteAccountButton(context) {
     return SizedBox(
       height: 60,
       child: PrimaryButton(
-          funds: false,
-          color: AppColors.primary,
+          funds: true,
+          logoff: true,
+          color: Colors.red,
           onPressed: () {
             Navigator.pushNamed(context, '/homepage');
           },
-          text: "Tamanho da fonte"),
+          text: "Deletar conta"),
     );
   }
 }
