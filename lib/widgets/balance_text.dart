@@ -34,7 +34,7 @@ class BalanceText extends StatelessWidget {
               const Text(
                 "Saldo atual: ",
                 style: TextStyle(
-                  fontSize: 32,
+                  fontSize: 24,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
@@ -45,7 +45,7 @@ class BalanceText extends StatelessWidget {
               Text(
                 wallet != null ? "R\$ ${wallet.balance}" : "R\$ 0",
                 style: const TextStyle(
-                  fontSize: 32,
+                  fontSize: 24,
                   color: AppColors.primary,
                   fontWeight: FontWeight.bold,
                 ),

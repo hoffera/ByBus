@@ -27,7 +27,6 @@ class LoginPage extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
-                const SizedBox(height: 50),
                 _logo(),
                 const SizedBox(height: 15),
                 _title(),
@@ -51,7 +50,7 @@ class LoginPage extends StatelessWidget {
   _logo() {
     return Image.asset(
       height: 300,
-      'lib/assets/logo.jpeg',
+      'lib/assets/logosem.png',
     );
   }
 

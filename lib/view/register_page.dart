@@ -22,11 +22,10 @@ class RegisterPage extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
           child: Center(
             child: Column(
               children: [
-                const SizedBox(height: 50.0),
                 _title(),
                 const SizedBox(height: 10.0),
                 _subtitle(),

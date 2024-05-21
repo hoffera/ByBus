@@ -64,7 +64,7 @@ class CoreButton extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontSize: logoff ? 20 : (funds ? 32 : 20),
+        fontSize: logoff ? 20 : (funds ? 24 : 20),
         fontWeight: logoff
             ? FontWeight.w700
             : (funds ? FontWeight.bold : FontWeight.w700),

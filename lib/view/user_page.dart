@@ -11,7 +11,6 @@ class UserPage extends StatelessWidget {
   UserPage({super.key, required this.user});
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   AuthService authServices = AuthService();
 

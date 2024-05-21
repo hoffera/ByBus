@@ -35,7 +35,7 @@ class _MapPageState extends State<MapPage> {
 
   _map() {
     return const SizedBox(
-      height: 500,
+      height: 320,
       width: double.infinity,
       child: MapWidget(),
     );
@@ -43,13 +43,13 @@ class _MapPageState extends State<MapPage> {
 
   _balance() {
     return Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
         child: BalanceText(uid: widget.user.uid));
   }
 
   _goToText() {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -63,7 +63,7 @@ class _MapPageState extends State<MapPage> {
 
   _timeText() {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -78,13 +78,13 @@ class _MapPageState extends State<MapPage> {
   _title(String title) {
     return Text(
       title,
-      style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
     );
   }
 
   _payButton(context) {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
       child: SizedBox(
         height: 50,
         child: PrimaryButton(

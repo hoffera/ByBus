@@ -14,11 +14,11 @@ class ConfigPage extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              const SizedBox(height: 80.0),
+              const SizedBox(height: 10.0),
               _title(),
               const SizedBox(height: 10.0),
               _subtitle(),
-              const SizedBox(height: 70.0),
+              const SizedBox(height: 50.0),
               _colorButton(context),
               const SizedBox(height: 50.0),
               _languageButton(context),
@@ -86,7 +86,7 @@ class ConfigPage extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(context, '/homepage');
           },
-          text: "Idioma"),
+          text: "Idioma / EM ANDAMENTO"),
     );
   }
 
@@ -118,7 +118,7 @@ class ConfigPage extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(context, '/homepage');
           },
-          text: "Deletar conta"),
+          text: "Deletar conta  / EM ANDAMENTO"),
     );
   }
 }

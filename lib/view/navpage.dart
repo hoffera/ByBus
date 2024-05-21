@@ -35,6 +35,7 @@ class _NavPageState extends State<NavPage> {
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: CurvedNavigationBar(
+        height: 50,
         backgroundColor: Colors.transparent,
         buttonBackgroundColor: AppColors.primary,
         color: AppColors.primary,

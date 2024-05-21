@@ -12,17 +12,14 @@ class HomeLoginPage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            const SizedBox(
-              height: 100,
-            ),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Image.asset(
-                'lib/assets/logo.jpeg',
+                'lib/assets/logosem.png',
               ),
             ),
             const SizedBox(
-              height: 100,
+              height: 50,
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),

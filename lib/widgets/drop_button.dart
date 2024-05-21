@@ -15,14 +15,14 @@ class _DropButtonState extends State<DropButton> {
     List<String> dropDownItems = <String>['12:00', '13:00', '14:00', '1:00'];
 
     return Container(
-      height: 55,
+      height: 45,
       width: 210,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: AppColors.primary, // Define a cor rosa aqui
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.fromLTRB(15, 7, 7, 7),
         child: DropdownButton<String>(
           hint: const Text(
             "Univali",
