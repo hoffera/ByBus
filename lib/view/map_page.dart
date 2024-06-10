@@ -1,10 +1,11 @@
 import 'package:bybus/enum/enum.dart';
+import 'package:bybus/view/route_page.dart';
 import 'package:bybus/widgets/balance_text.dart';
 import 'package:bybus/widgets/drop_button.dart';
-import 'package:bybus/widgets/map_widget.dart';
 import 'package:bybus/widgets/primary_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapPage extends StatefulWidget {
   final User user;
@@ -15,6 +16,15 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
+  List<LatLng> rotas = [];
+  final Rota rota = Rota();
+
+  @override
+  void initState() {
+    super.initState();
+    rotas = rota.cordeirosRessacada.busPosition;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,10 +44,16 @@ class _MapPageState extends State<MapPage> {
   }
 
   _map() {
-    return const SizedBox(
-      height: 320,
+    final Rota rota = Rota();
+    return SizedBox(
+      height: 500,
       width: double.infinity,
-      child: MapWidget(),
+      child: AllMarkersMapWidget(
+        rotas: rotas,
+      ),
+      //  MapWidget(
+      //   rota: rota.luizAlvesUnivali,
+      // ),
     );
   }
 
@@ -47,15 +63,37 @@ class _MapPageState extends State<MapPage> {
         child: BalanceText(uid: widget.user.uid));
   }
 
+  List<LatLng> selecionarRota(String r) {
+    switch (r) {
+      case 'univali':
+        return rota.balnearioUnivali.busPosition;
+
+      case 'fazenda':
+        return rota.cabecudas.busPosition;
+
+      default:
+        return rota.cabecudas.busPosition;
+    }
+  }
+
   _goToText() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _title("Ir para:"),
+          _title("Rota:"),
           const SizedBox(width: 10),
-          const DropButton(),
+          DropButton(
+            dropDownItems: const ["univali", "fazenda"],
+            onSelected: (String selectedValue) {
+              print(selectedValue);
+              setState(() {
+                rotas = selecionarRota(selectedValue);
+              });
+              setState(() {});
+            },
+          ),
         ],
       ),
     );
@@ -69,7 +107,13 @@ class _MapPageState extends State<MapPage> {
         children: [
           _title("Hora:"),
           const SizedBox(width: 50),
-          const DropButton(),
+          DropButton(
+            dropDownItems: const ["12:00", "13:00"],
+            onSelected: (String selectedValue) {
+              // Faça algo com o valor selecionado
+              print('O valor selecionado foi: $selectedValue');
+            },
+          ),
         ],
       ),
     );

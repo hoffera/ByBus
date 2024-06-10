@@ -117,6 +117,7 @@ class LoginPage extends StatelessWidget {
         },
       );
       authServices.loginUser(email: email, password: senha).then((error) {
+        Navigator.pop(context);
         if (error == null) {
           showSnackBar(
               context: context, mensagem: "Logado com sucesso!", isErro: false);

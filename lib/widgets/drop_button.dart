@@ -2,18 +2,28 @@ import 'package:bybus/enum/enum.dart';
 import 'package:flutter/material.dart';
 
 class DropButton extends StatefulWidget {
-  const DropButton({Key? key}) : super(key: key);
+  List<String> dropDownItems;
+  final void Function(String) onSelected;
+  DropButton({Key? key, required this.dropDownItems, required this.onSelected})
+      : super(key: key);
 
   @override
   State<DropButton> createState() => _DropButtonState();
 }
 
 class _DropButtonState extends State<DropButton> {
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      selectedValue = widget.dropDownItems.first;
+    });
+  }
+
   String? selectedValue;
   @override
   Widget build(BuildContext context) {
-    List<String> dropDownItems = <String>['12:00', '13:00', '14:00', '1:00'];
-
     return Container(
       height: 45,
       width: 210,
@@ -24,9 +34,9 @@ class _DropButtonState extends State<DropButton> {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(15, 7, 7, 7),
         child: DropdownButton<String>(
-          hint: const Text(
-            "Univali",
-            style: TextStyle(
+          hint: Text(
+            selectedValue!,
+            style: const TextStyle(
                 fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
           ),
           value: selectedValue,
@@ -34,7 +44,7 @@ class _DropButtonState extends State<DropButton> {
           underline: const SizedBox(),
           borderRadius: BorderRadius.circular(20.0),
           dropdownColor: AppColors.primary,
-          items: dropDownItems.map((String value) {
+          items: widget.dropDownItems.map((String value) {
             return DropdownMenuItem(
               value: value,
               child: Text(
@@ -50,6 +60,7 @@ class _DropButtonState extends State<DropButton> {
             setState(() {
               selectedValue = newValue!;
             });
+            widget.onSelected(selectedValue!);
           },
         ),
       ),

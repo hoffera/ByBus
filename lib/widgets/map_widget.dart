@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapWidget extends StatefulWidget {
-  const MapWidget({Key? key}) : super(key: key);
+  final Rotas rota;
+  const MapWidget({Key? key, required this.rota}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -15,19 +16,6 @@ class MapWidget extends StatefulWidget {
 Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
 
 class _MapWidgetState extends State<MapWidget> {
-  final univaliUnivali = Rotas(
-    id: '1',
-    price: '20',
-    busCode: 'X123',
-    startTime: '09:00',
-    endTime: '10:00',
-    busPosition: [
-      const LatLng(-26.914680798734743, -48.66320286865043),
-      const LatLng(-26.919193835456685, -48.65429984780385),
-      const LatLng(-26.9941236702108, -48.64768600071914),
-      const LatLng(-27.005041676442264, -48.63394857306774),
-    ],
-  );
   late GoogleMapController mapController;
   int currentPositionIndex = 0;
   late Timer timer;
@@ -48,12 +36,12 @@ class _MapWidgetState extends State<MapWidget> {
     });
     updateMarkers(); // Inicialmente busca os dados
     // Configura um temporizador para atualizar os dados a cada 5 segundos
-    timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         currentPositionIndex =
-            (currentPositionIndex + 1) % univaliUnivali.busPosition.length;
+            (currentPositionIndex + 1) % widget.rota.busPosition.length;
         mapController.animateCamera(CameraUpdate.newLatLng(
-            univaliUnivali.busPosition[currentPositionIndex]));
+            widget.rota.busPosition[currentPositionIndex]));
       });
       updateMarkers();
     });
@@ -81,7 +69,7 @@ class _MapWidgetState extends State<MapWidget> {
         'lib/assets/busao.png',
       ),
       infoWindow: const InfoWindow(title: "Coleira"),
-      position: univaliUnivali.busPosition[currentPositionIndex],
+      position: widget.rota.busPosition[currentPositionIndex],
     );
 
     setState(() {
@@ -94,7 +82,7 @@ class _MapWidgetState extends State<MapWidget> {
     return GoogleMap(
       onMapCreated: _onMapCreated,
       initialCameraPosition: CameraPosition(
-        target: univaliUnivali.busPosition.first, // Posição inicial do ônibus
+        target: widget.rota.busPosition.first, // Posição inicial do ônibus
         zoom: 18.0,
       ),
       markers: Set<Marker>.of(markers.values),
@@ -104,7 +92,7 @@ class _MapWidgetState extends State<MapWidget> {
 // {
 //         Marker(
 //           markerId: const MarkerId('busMarker'),
-//           position: univaliUnivali
+//           position: rota
 //               .busPosition[currentPositionIndex], // Posição do ônibus
 //           icon: busIcon, // Defina o ícone do marcador
 //         ),
