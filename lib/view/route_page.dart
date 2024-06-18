@@ -50,10 +50,10 @@ class _AllMarkersMapWidgetState extends State<AllMarkersMapWidget> {
         markerId: markerId,
         position: widget.rotas[i],
         infoWindow: InfoWindow(title: 'Posição $i'),
-        icon: await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(),
-          'lib/assets/busao.png', // Certifique-se de que este caminho é correto
-        ),
+        // icon: await BitmapDescriptor.fromAssetImage(
+        //   const ImageConfiguration(),
+        //   'lib/assets/busao.png', // Certifique-se de que este caminho é correto
+        // ),
         onTap: () {
           final position = widget.rotas[i];
           print('Marcador $position clicado!');

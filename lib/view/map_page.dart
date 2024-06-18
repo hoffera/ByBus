@@ -33,6 +33,7 @@ class _MapPageState extends State<MapPage> {
         children: [
           _map(),
           const SizedBox(height: 10),
+          _title("Selecione um Ponto de onibus no mapa"),
           _balance(),
           _goToText(),
           _timeText(),
@@ -108,7 +109,7 @@ class _MapPageState extends State<MapPage> {
           _title("Hora:"),
           const SizedBox(width: 50),
           DropButton(
-            dropDownItems: const ["12:00", "13:00"],
+            dropDownItems: const ["12:00 - 13:00", "13:00"],
             onSelected: (String selectedValue) {
               // Faça algo com o valor selecionado
               print('O valor selecionado foi: $selectedValue');
