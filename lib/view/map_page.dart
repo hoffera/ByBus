@@ -34,10 +34,9 @@ class _MapPageState extends State<MapPage> {
           children: [
             _map(),
             const SizedBox(height: 10),
-            _title("Selecione um Ponto de ônibus no mapa"),
             _balance(),
             _goToText(),
-            _timeText(),
+            // _timeText(),
             const SizedBox(height: 10.0),
             _payButton(context),
           ],
@@ -58,8 +57,10 @@ class _MapPageState extends State<MapPage> {
         polylines: {
           Polyline(
             polylineId: const PolylineId("route"),
+            startCap: Cap.buttCap,
+            jointType: JointType.round,
             points: rotas,
-            color: Colors.blue,
+            color: Colors.red,
             width: 5,
           ),
         },
@@ -112,24 +113,24 @@ class _MapPageState extends State<MapPage> {
     );
   }
 
-  _timeText() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _title("Hora:"),
-          const SizedBox(width: 50),
-          DropButton(
-            dropDownItems: const ["12:00 - 13:00", "13:00"],
-            onSelected: (String selectedValue) {
-              print('O valor selecionado foi: $selectedValue');
-            },
-          ),
-        ],
-      ),
-    );
-  }
+  // _timeText() {
+  //   return Padding(
+  //     padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //       children: [
+  //         _title("Hora:"),
+  //         const SizedBox(width: 50),
+  //         DropButton(
+  //           dropDownItems: const ["12:00 - 13:00", "13:00"],
+  //           onSelected: (String selectedValue) {
+  //             print('O valor selecionado foi: $selectedValue');
+  //           },
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   _title(String title) {
     return Text(

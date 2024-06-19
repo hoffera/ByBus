@@ -37,10 +37,12 @@ class _MapPageState extends State<MapRoutePage> {
           children: [
             _map(),
             const SizedBox(height: 10),
+            _title("Selecione um Ponto de ônibus no mapa"),
             _balance(),
             _timeText(),
             const SizedBox(height: 10.0),
             _payButton(context),
+            _backButton(context),
           ],
         ),
       ),
@@ -116,6 +118,26 @@ class _MapPageState extends State<MapRoutePage> {
           text: "Prosseguir para a compra",
         ),
       ),
+    );
+  }
+
+  _backButton(context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+      child: SizedBox(
+          height: 50,
+          child: PrimaryButton(
+            funds: true,
+            logoff: true,
+            color: Colors.grey,
+            text: "Sair",
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                '/navpage',
+              );
+            },
+          )),
     );
   }
 }
