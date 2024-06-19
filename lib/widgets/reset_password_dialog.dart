@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bybus/services/auth_services.dart';
+import 'package:bybus/widgets/show_snackbar.dart';
 import 'package:bybus/widgets/text_input.dart';
 import 'package:flutter/material.dart';
 
@@ -42,8 +43,15 @@ class _PasswordResetDialogState extends State<PasswordResetDialog> {
           onPressed: () {
             if (widget.password == true) {
               String email = _emailController.text;
-              authServices.removerConta(password: email);
-              Navigator.pushNamed(context, '/homeloginpage');
+              authServices.removerConta(password: email).then((error) {
+                if (error == null) {
+                  showSnackBar(
+                      context: context,
+                      mensagem: "Usuario removido com sucesso!",
+                      isErro: true);
+                  Navigator.pushNamed(context, '/homeloginpage');
+                }
+              });
             } else {
               String email = _emailController.text;
               authServices.resetPassword(email: email);
