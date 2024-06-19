@@ -36,7 +36,7 @@ class _MapWidgetState extends State<MapWidget> {
     });
     updateMarkers(); // Inicialmente busca os dados
     // Configura um temporizador para atualizar os dados a cada 5 segundos
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 60), (timer) {
       setState(() {
         currentPositionIndex =
             (currentPositionIndex + 1) % widget.rota.busPosition.length;

@@ -42,9 +42,13 @@ class WalletService {
     required String walletId,
     required String newBalance,
   }) async {
-    return firestore
-        .collection(uid)
-        .doc(walletId)
-        .update({'balance': newBalance});
+    try {
+      await firestore
+          .collection(uid)
+          .doc(walletId)
+          .update({'balance': newBalance});
+    } catch (e) {
+      throw Exception('Failed to update wallet balance: $e');
+    }
   }
 }

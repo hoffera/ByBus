@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bybus/enum/enum.dart';
-import 'package:bybus/widgets/balance_text.dart';
+import 'package:bybus/models/rotas.dart';
+import 'package:bybus/widgets/map_widget.dart';
 import 'package:bybus/widgets/primary_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -35,12 +36,10 @@ class _MapPageState extends State<BusPage> {
         child: Column(
           children: [
             _map(),
-            const SizedBox(height: 10),
-            _balance(),
-            _timeText(),
-            const SizedBox(height: 10.0),
+            const SizedBox(height: 50.0),
+            _title("Espere seu onibus chegar no seu ponto"),
+            const SizedBox(height: 50.0),
             _payButton(context),
-            _backButton(context),
           ],
         ),
       ),
@@ -48,41 +47,17 @@ class _MapPageState extends State<BusPage> {
   }
 
   _map() {
-    return const SizedBox(
-        height: 500, width: double.infinity, child: SizedBox());
-  }
-
-  _balance() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-      child: BalanceText(uid: widget.user.uid),
-    );
-  }
-
-  List<LatLng> selecionarRota(String r) {
-    switch (r) {
-      case 'univali':
-        return rota.balnearioUnivali.busPosition;
-
-      case 'fazenda':
-        return rota.cabecudas.busPosition;
-
-      default:
-        return rota.cabecudas.busPosition;
-    }
-  }
-
-  _timeText() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _title("Valor:"),
-          const SizedBox(width: 50),
-          _title("R\$5.00"),
-        ],
-      ),
+    Rotas rota = Rotas(
+        id: "0",
+        price: "price",
+        busCode: "price",
+        startTime: "price",
+        endTime: "price",
+        busPosition: widget.rotas);
+    return SizedBox(
+      height: 500,
+      width: double.infinity,
+      child: MapWidget(rota: rota),
     );
   }
 
@@ -97,39 +72,19 @@ class _MapPageState extends State<BusPage> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
       child: SizedBox(
-        height: 50,
+        height: 60,
         child: PrimaryButton(
           funds: false,
           color: AppColors.primary,
           onPressed: () {
             Navigator.pushNamed(
               context,
-              '/routepage',
+              '/navpage',
             );
           },
-          text: "Prosseguir para a compra",
+          text: "Finalizar corrida",
         ),
       ),
-    );
-  }
-
-  _backButton(context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-      child: SizedBox(
-          height: 50,
-          child: PrimaryButton(
-            funds: true,
-            logoff: true,
-            color: Colors.grey,
-            text: "Sair",
-            onPressed: () {
-              Navigator.pushNamed(
-                context,
-                '/navpage',
-              );
-            },
-          )),
     );
   }
 }

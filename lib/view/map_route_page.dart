@@ -1,8 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bybus/enum/enum.dart';
+import 'package:bybus/models/wallet.dart';
+import 'package:bybus/services/wallet_services.dart';
+import 'package:bybus/view/bus_page.dart';
 import 'package:bybus/view/route_page.dart';
 import 'package:bybus/widgets/balance_text.dart';
 import 'package:bybus/widgets/primary_button.dart';
+import 'package:bybus/widgets/show_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -21,6 +25,7 @@ class MapRoutePage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapRoutePage> {
+  WalletService walletService = WalletService();
   final Rota rota = Rota();
   late GoogleMapController mapController;
 
@@ -101,6 +106,22 @@ class _MapPageState extends State<MapRoutePage> {
     );
   }
 
+  _payment(double value, context) async {
+    Wallet? wallet = await walletService.getWalletById(widget.user.uid);
+
+    if (wallet != null) {
+      double newBalance = double.parse(wallet.balance) - value;
+      wallet.balance = newBalance.toString();
+      await walletService.updateWalletBalance(
+        walletId: wallet.id,
+        newBalance: wallet.balance,
+      );
+      showSnackBar(
+          context: context, mensagem: "Pagamento aprovado!", isErro: false);
+    }
+    setState(() {}); // Atualiza a UI
+  }
+
   _payButton(context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
@@ -110,9 +131,15 @@ class _MapPageState extends State<MapRoutePage> {
           funds: false,
           color: AppColors.primary,
           onPressed: () {
-            Navigator.pushNamed(
+            _payment(5, context);
+            Navigator.push(
               context,
-              '/routepage',
+              MaterialPageRoute(
+                builder: (context) => BusPage(
+                  user: widget.user,
+                  rotas: widget.rotas,
+                ),
+              ),
             );
           },
           text: "Prosseguir para a compra",
@@ -130,7 +157,7 @@ class _MapPageState extends State<MapRoutePage> {
             funds: true,
             logoff: true,
             color: Colors.grey,
-            text: "Sair",
+            text: "Voltar",
             onPressed: () {
               Navigator.pushNamed(
                 context,
