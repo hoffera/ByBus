@@ -50,6 +50,11 @@ class _PasswordResetDialogState extends State<PasswordResetDialog> {
                       mensagem: "Usuario removido com sucesso!",
                       isErro: true);
                   Navigator.pushNamed(context, '/homeloginpage');
+                } else {
+                  showSnackBar(
+                      context: context,
+                      mensagem: "Senha invalida!",
+                      isErro: true);
                 }
               });
             } else {
