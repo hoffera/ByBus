@@ -1,6 +1,7 @@
 import 'package:bybus/enum/enum.dart';
 import 'package:bybus/services/auth_services.dart';
 import 'package:bybus/widgets/primary_button.dart';
+import 'package:bybus/widgets/reset_password_dialog.dart';
 import 'package:flutter/material.dart';
 
 class ConfigPage extends StatelessWidget {
@@ -108,6 +109,17 @@ class ConfigPage extends StatelessWidget {
         ));
   }
 
+  void showPasswordResetDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return PasswordResetDialog(
+          password: true,
+        );
+      },
+    );
+  }
+
   _deleteAccountButton(context) {
     return SizedBox(
       height: 60,
@@ -116,9 +128,9 @@ class ConfigPage extends StatelessWidget {
           logoff: true,
           color: Colors.red,
           onPressed: () {
-            Navigator.pushNamed(context, '/homepage');
+            showPasswordResetDialog(context);
           },
-          text: "Deletar conta  / EM ANDAMENTO"),
+          text: "Deletar conta"),
     );
   }
 }

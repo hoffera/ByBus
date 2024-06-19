@@ -1,16 +1,19 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class AllMarkersMapWidget extends StatefulWidget {
+class RoutePage extends StatefulWidget {
   final List<LatLng> rotas;
+  final User user;
 
-  const AllMarkersMapWidget({Key? key, required this.rotas}) : super(key: key);
+  const RoutePage({Key? key, required this.rotas, required this.user})
+      : super(key: key);
 
   @override
   _AllMarkersMapWidgetState createState() => _AllMarkersMapWidgetState();
 }
 
-class _AllMarkersMapWidgetState extends State<AllMarkersMapWidget> {
+class _AllMarkersMapWidgetState extends State<RoutePage> {
   late GoogleMapController mapController;
   Map<MarkerId, Marker> markers = {};
 
@@ -22,7 +25,7 @@ class _AllMarkersMapWidgetState extends State<AllMarkersMapWidget> {
   }
 
   @override
-  void didUpdateWidget(covariant AllMarkersMapWidget oldWidget) {
+  void didUpdateWidget(covariant RoutePage oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.rotas != oldWidget.rotas) {
       setMarkers();

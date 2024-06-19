@@ -1,29 +1,32 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bybus/enum/enum.dart';
-import 'package:bybus/view/map_route_page.dart';
+import 'package:bybus/view/route_page.dart';
 import 'package:bybus/widgets/balance_text.dart';
-import 'package:bybus/widgets/drop_button.dart';
 import 'package:bybus/widgets/primary_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class MapPage extends StatefulWidget {
+class MapRoutePage extends StatefulWidget {
   final User user;
-  const MapPage({super.key, required this.user});
+  final List<LatLng> rotas;
+  const MapRoutePage({
+    Key? key,
+    required this.user,
+    required this.rotas,
+  }) : super(key: key);
 
   @override
-  State<MapPage> createState() => _MapPageState();
+  State<MapRoutePage> createState() => _MapPageState();
 }
 
-class _MapPageState extends State<MapPage> {
-  List<LatLng> rotas = [];
+class _MapPageState extends State<MapRoutePage> {
   final Rota rota = Rota();
   late GoogleMapController mapController;
 
   @override
   void initState() {
     super.initState();
-    rotas = rota.cordeirosRessacada.busPosition;
   }
 
   @override
@@ -34,9 +37,7 @@ class _MapPageState extends State<MapPage> {
           children: [
             _map(),
             const SizedBox(height: 10),
-            _title("Selecione um Ponto de ônibus no mapa"),
             _balance(),
-            _goToText(),
             _timeText(),
             const SizedBox(height: 10.0),
             _payButton(context),
@@ -50,22 +51,9 @@ class _MapPageState extends State<MapPage> {
     return SizedBox(
       height: 500,
       width: double.infinity,
-      child: GoogleMap(
-        initialCameraPosition: CameraPosition(
-          target: rotas.isNotEmpty ? rotas.first : const LatLng(0, 0),
-          zoom: 14.0,
-        ),
-        polylines: {
-          Polyline(
-            polylineId: const PolylineId("route"),
-            points: rotas,
-            color: Colors.blue,
-            width: 5,
-          ),
-        },
-        onMapCreated: (GoogleMapController controller) {
-          mapController = controller;
-        },
+      child: RoutePage(
+        rotas: widget.rotas,
+        user: widget.user,
       ),
     );
   }
@@ -90,42 +78,15 @@ class _MapPageState extends State<MapPage> {
     }
   }
 
-  _goToText() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _title("Rota:"),
-          const SizedBox(width: 10),
-          DropButton(
-            dropDownItems: const ["univali", "fazenda"],
-            onSelected: (String selectedValue) {
-              print(selectedValue);
-              setState(() {
-                rotas = selecionarRota(selectedValue);
-              });
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
   _timeText() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _title("Hora:"),
+          _title("Valor:"),
           const SizedBox(width: 50),
-          DropButton(
-            dropDownItems: const ["12:00 - 13:00", "13:00"],
-            onSelected: (String selectedValue) {
-              print('O valor selecionado foi: $selectedValue');
-            },
-          ),
+          _title("R\$5.00"),
         ],
       ),
     );
@@ -147,14 +108,9 @@ class _MapPageState extends State<MapPage> {
           funds: false,
           color: AppColors.primary,
           onPressed: () {
-            Navigator.push(
+            Navigator.pushNamed(
               context,
-              MaterialPageRoute(
-                builder: (context) => MapRoutePage(
-                  user: widget.user,
-                  rotas: rotas,
-                ),
-              ),
+              '/routepage',
             );
           },
           text: "Prosseguir para a compra",

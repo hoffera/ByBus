@@ -1,9 +1,14 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bybus/services/auth_services.dart';
 import 'package:bybus/widgets/text_input.dart';
 import 'package:flutter/material.dart';
 
 class PasswordResetDialog extends StatefulWidget {
-  const PasswordResetDialog({super.key});
+  bool? password = false;
+  PasswordResetDialog({
+    Key? key,
+    this.password,
+  }) : super(key: key);
 
   @override
   _PasswordResetDialogState createState() => _PasswordResetDialogState();
@@ -16,9 +21,9 @@ class _PasswordResetDialogState extends State<PasswordResetDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text(
-        'Redefinir Senha',
-        style: TextStyle(color: Colors.white, fontSize: 24),
+      title: Text(
+        widget.password! ? 'Deletar conta, sua senha' : 'Redefinir Senha',
+        style: const TextStyle(color: Colors.white, fontSize: 24),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -28,17 +33,22 @@ class _PasswordResetDialogState extends State<PasswordResetDialog> {
             password: false,
             email: true,
             controller: _emailController,
-            text: 'E-mail',
+            text: widget.password! ? 'Senha' : 'E-mail',
           ),
         ],
       ),
       actions: [
         TextButton(
           onPressed: () {
-            // Adicione aqui a lógica para enviar o email de redefinição de senha
-            String email = _emailController.text;
-            authServices.resetPassword(email: email);
-            Navigator.of(context).pop(); // Fecha o diálogo
+            if (widget.password == true) {
+              String email = _emailController.text;
+              authServices.removerConta(password: email);
+              Navigator.pushNamed(context, '/homeloginpage');
+            } else {
+              String email = _emailController.text;
+              authServices.resetPassword(email: email);
+              Navigator.of(context).pop(); // Fecha o diálogo
+            }
           },
           child: const Text(
             'Enviar',
@@ -55,7 +65,7 @@ void showPasswordResetDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return const PasswordResetDialog();
+      return PasswordResetDialog();
     },
   );
 }
